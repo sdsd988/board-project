@@ -30,7 +30,7 @@ class JpaRepositoryTest {
 
 
 
-    @DisplayName("select 테스트")
+    @DisplayName("save & select 테스트")
     @Test
     void givenTestData_whenSelecting_thenWorksFine() {
         //given
@@ -59,5 +59,19 @@ class JpaRepositoryTest {
 
         //then
         assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updateHashtag);
+    }
+
+    @DisplayName("delete 테스트")
+    @Test
+    void delete_test() {
+        //given
+        Article savedArticle = articleRepository.save(Article.of("new article1", "new content", "#Spring"));
+        Long deleteId = savedArticle.getId();
+
+        //when
+        articleRepository.deleteById(deleteId);
+
+        //then
+        assertThat(articleRepository.findAll().size()).isEqualTo(0);
     }
 }
