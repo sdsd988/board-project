@@ -27,6 +27,7 @@ spring:
   data.rest:
     base-path: /api
     direction-strategy: annotated
-
+  thymeleaf3:
+    decoupled-logic: true
 
 
