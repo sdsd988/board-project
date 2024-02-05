@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.config.JpaConfig;
 import com.example.demo.domain.Article;
+import com.example.demo.domain.UserAccount;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,8 +36,8 @@ class JpaRepositoryTest {
     void givenTestData_whenSelecting_thenWorksFine() {
         //given
 
-        articleRepository.save(Article.of("new article1", "new content", "#Spring"));
-        articleRepository.save(Article.of("new article2", "new content", "#Spring"));
+        articleRepository.save(Article.of(UserAccount.of("JSY","pw",null,null,null),"new article1", "new content", "#Spring"));
+        articleRepository.save(Article.of(UserAccount.of("JSY","pw",null,null,null),"new article2", "new content", "#Spring"));
         //when
         List<Article> articles = articleRepository.findAll();
 
@@ -50,7 +51,7 @@ class JpaRepositoryTest {
     void update_test() {
 
         //given
-        Article savedArticle = articleRepository.save(Article.of("new article1", "new content", "#Spring"));
+        Article savedArticle = articleRepository.save(Article.of(UserAccount.of("JSY","pw",null,null,null),"new article1", "new content", "#Spring"));
         var updateHashtag = "#SpringBoot";
         savedArticle.setHashtag(updateHashtag);
 
@@ -65,7 +66,7 @@ class JpaRepositoryTest {
     @Test
     void delete_test() {
         //given
-        Article savedArticle = articleRepository.save(Article.of("new article1", "new content", "#Spring"));
+        Article savedArticle = articleRepository.save(Article.of(UserAccount.of("JSY","pw",null,null,null),"new article1", "new content", "#Spring"));
         Long deleteId = savedArticle.getId();
 
         //when
