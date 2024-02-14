@@ -234,16 +234,12 @@ class ArticleControllerTest {
     }
 
     private UserAccountDto createUserAccountDto() {
-        return UserAccountDto.of(1L,
+        return UserAccountDto.of(
                 "JSY",
                 "pw",
                 "jsy@gmail.com",
                 "JSY",
-                "memo",
-                LocalDateTime.now(),
-                "JSY",
-                LocalDateTime.now(),
-                "JSY");
+                "memo");
     }
 
 }
