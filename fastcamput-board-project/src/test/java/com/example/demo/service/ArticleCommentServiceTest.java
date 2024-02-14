@@ -7,6 +7,7 @@ import com.example.demo.dto.ArticleCommentDto;
 import com.example.demo.dto.UserAccountDto;
 import com.example.demo.repository.ArticleCommentRepository;
 import com.example.demo.repository.ArticleRepository;
+import com.example.demo.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,8 @@ class ArticleCommentServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
+    @Mock
+    private UserAccountRepository userAccountRepository;
 
 
     @DisplayName("게시글 ID로 조회하면, 해당하는 댓글 리스트를 반환한다.")
@@ -64,14 +67,17 @@ class ArticleCommentServiceTest {
     void givenArticleCommentInfo_whenSavingArticleComment_thenSavesArticleComment() {
         // Given
         ArticleCommentDto dto = createArticleCommentDto("댓글");
+
         given(articleRepository.getReferenceById(dto.articleId())).willReturn(createArticle());
         given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
+        given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
 
         // When
         sut.saveArticleComment(dto);
 
         // Then
         then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(articleCommentRepository).should().save(any(ArticleComment.class));
     }
 
@@ -113,13 +119,8 @@ class ArticleCommentServiceTest {
     private ArticleCommentDto createArticleCommentDto(String content) {
         return ArticleCommentDto.of(
                 1L,
-                1L,
                 createUserAccountDto(),
-                content,
-                LocalDateTime.now(),
-                "JSY",
-                LocalDateTime.now(),
-                "JSY"
+                content
         );
     }
 
@@ -153,16 +154,11 @@ class ArticleCommentServiceTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                1L,
                 "JSY",
                 "password",
                 "jsy@gmail.com",
                 "JSY",
-                "This is memo",
-                LocalDateTime.now(),
-                "JSY",
-                LocalDateTime.now(),
-                "JSY"
+                "This is memo"
         );
     }
 
@@ -176,7 +172,7 @@ class ArticleCommentServiceTest {
 
     private UserAccount createUserAccount() {
         return UserAccount.of(
-                "jsy",
+                " ",
                 "password",
                 "jsy@gmail.com",
                 "JSY",

@@ -66,7 +66,7 @@ class JpaRepositoryTest {
     @Test
     void delete_test() {
         //given
-        Article savedArticle = articleRepository.save(Article.of(UserAccount.of("JSY","pw",null,null,null),"new article1", "new content", "#Spring"));
+        Article savedArticle = articleRepository.save(Article.of(UserAccount.of("newJSY","pw",null,null,null),"new article1", "new content", "#Spring"));
         Long deleteId = savedArticle.getId();
 
         //when
